@@ -94,7 +94,7 @@ export default class BaseTable extends Component {
   render(){
     return (
       <div>
-        <Card size="small" title="Small size card" extra={<Button type="primary" icon="plus">增加</Button>}>
+        <Card size="small" title="Small size card" extra={<Button type="primary" icon="plus">添加</Button>}>
           <Table columns={this.state.columns} dataSource={this.state.tableData} />
         </Card>
       </div>
