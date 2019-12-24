@@ -1,13 +1,15 @@
 import React, {Component}  from 'react';
 import { Card, Button, Table, Divider, Tag } from 'antd';
+import LinkButton from "../../../components/LinkButton/index.jsx"
 
 export default class BaseTable extends Component {
   state = {
+    loading: false,
     columns: [],
     tableData: []
   }
 
-  componentDidMount(){
+  intiTable = ()=>{
     const columns = [
       {
         title: 'Name',
@@ -48,54 +50,59 @@ export default class BaseTable extends Component {
       {
         title: 'Action',
         key: 'action',
+        width: 300,
         render: (text, record) => (
           <span>
-            <span>Invite {record.name}</span>
+            <LinkButton>Invite {record.name}</LinkButton>
             <Divider type="vertical" />
-            <span>Delete</span>
+            <LinkButton>Delete</LinkButton>
           </span>
         ),
       },
     ];
-    
-    const tableData = [
-      {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-      },
-      {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-      },
-      {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-      },
-    ];
-
+    const tableData = Array.from(new Array(6)).map((item,i)=>{
+      const n = parseInt(Math.random()*100)
+      return {
+        key: String(i),
+        name: `John Brown ${i} `,
+        age: n ,
+        address: `New York No. ${n-5} Lake Park`,
+        tags: n > 30 ?  ['nice', 'developer'] : ['loser'],
+      }
+    })
+    console.log('tableData', tableData)
+    this.setState({
+      loading: true
+    })
     setTimeout(()=>{
       this.setState({
         columns,
-        tableData
+        tableData,
+        loading: false
       })
     }, 1000)
+  }
+
+  componentDidMount(){
+    // 初始化表格数据
+    this.intiTable()
 
   }
- 
+  onChange = ()=>{
+    console.log('pagination')
+    this.intiTable()
+  }
+
   render(){
     return (
       <div>
-        <Card size="small" title="Small size card" extra={<Button type="primary" icon="plus">添加</Button>}>
-          <Table columns={this.state.columns} dataSource={this.state.tableData} />
+        <Card size="small" title="Base Table" extra={<Button type="primary" icon="plus">添加</Button>}>
+          <Table 
+            bordered 
+            loading= {this.state.loading}
+            pagination={{defaultCurrent:1 ,defaultPageSize: 6, total: 200, onChange: this.onChange}}
+            columns={this.state.columns} 
+            dataSource={this.state.tableData} />
         </Card>
       </div>
     )

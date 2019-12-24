@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>聊天框</title>
+</head>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  li {
+    list-style: none;
+  }
+
+  .textRight {
+    text-align: right;
+  }
+
+  .triangle {
+    width: 300px;
+  }
+
+  .triangle li {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .triangle li span {
+    position: relative;
+    border-radius: 7px;
+    background-color: #9EEA6A;
+    padding: 6px 10px 8px 10px;
+    z-index: 1;
+  }
+
+  .triangle li span:before,
+  .triangle li span:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    position: absolute;
+    top: 10px;
+  }
+
+  .triangle li.textLeft span:before {
+    border-right: 8px solid #9EEA6A;
+    left: -16px;
+  }
+
+  .triangle li.textRight span:after {
+    border-left: 8px solid #9EEA6A;
+    right: -16px;
+  }
+</style>
+
+<body>
+  <div class="triangle">
+    <ul>
+      <li class="textLeft"><span>吃了没？</span></li>
+      <li class="textRight"><span>嗯嗯，在吃呢，你呢。</span></li>
+    </ul>
+  </div>
+  <script>
+    function arg({name='', age=20}){
+      console.log(name, age)
+      let arg = Array.from(arguments)
+      let sli = Array.prototype.slice.call(arguments,0,1)
+      console.log('arg', arg)
+      console.log('sli', sli)
+      console.log('arguments', arguments)
+    }
+    arg({name: 'lily', ages: 18}, 123)
+  </script>
+</body>
+</html>
