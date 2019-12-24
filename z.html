@@ -11,6 +11,7 @@
   * {
     box-sizing: border-box;
   }
+
   li {
     list-style: none;
   }
@@ -61,20 +62,55 @@
 <body>
   <div class="triangle">
     <ul>
-      <li class="textLeft"><span>吃了没？</span></li>
-      <li class="textRight"><span>嗯嗯，在吃呢，你呢。</span></li>
+      <li class="textLeft"><span>how are you ?</span></li>
+      <li class="textRight"><span>fine, thank you !</span></li>
     </ul>
   </div>
   <script>
-    function arg({name='', age=20}){
+    let date = formatDate('2019/12/26', 'yyyy-MM-dd')
+    console.log('date', date)
+    function formatDate(oldDate, fmt) {
+      let date = new Date()
+      if (typeof oldDate === 'string' || typeof oldDate === 'number') {
+        date = new Date(oldDate)
+      } else {
+        date = oldDate
+      }
+      if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+      }
+      let o = {
+        'M+': date.getMonth() + 1,
+        'd+': date.getDate(),
+        'h+': date.getHours(),
+        'm+': date.getMinutes(),
+        's+': date.getSeconds()
+      }
+      function padLeftZero(str) {
+        return ('00' + str).substr(str.length)
+      }
+      for (let k in o) {
+        if (new RegExp(`(${k})`).test(fmt)) {
+          let str = o[k] + ''
+          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str))
+        }
+      }
+      return fmt
+    }
+
+    function arg({
+      name = '',
+      age = 20
+    }) {
       console.log(name, age)
       let arg = Array.from(arguments)
-      let sli = Array.prototype.slice.call(arguments,0,1)
+      let sli = Array.prototype.slice.call(arguments, 0, 1)
       console.log('arg', arg)
       console.log('sli', sli)
       console.log('arguments', arguments)
     }
-    arg({name: 'lily', ages: 18}, 123)
+    // arg({name: 'lily', ages: 18}, 123)
   </script>
 </body>
+
 </html>
