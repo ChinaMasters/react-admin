@@ -9,7 +9,7 @@ export default class BaseTable extends Component {
     tableData: []
   }
 
-  intiTable = ()=>{
+  intiTable = ()=> {
     const columns = [
       {
         title: 'Name',
@@ -88,7 +88,7 @@ export default class BaseTable extends Component {
     this.intiTable()
 
   }
-  onChange = ()=>{
+  onChange = () => {
     console.log('pagination')
     this.intiTable()
   }
