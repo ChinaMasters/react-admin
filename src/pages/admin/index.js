@@ -10,6 +10,7 @@ import Permit from "../user/permit"
 import Home from "../home/index"
 import Demo from "../demo/index"
 import Role from "../role/index"
+import Redux from "../redux/index"
 import User from "../user/index"
 import BaseTable from "../demo/table/baseTable"
 
@@ -50,6 +51,7 @@ export default class Admin extends React.Component {
               <Route path="/basetable" component={BaseTable}></Route>
               <Route path="/role" component={Role}></Route>
               <Route path="/user" component={User}></Route>
+              <Route path="/redux" component={Redux}></Route>
               <Redirect to="/home"></Redirect>
             </Switch>
           </Content>

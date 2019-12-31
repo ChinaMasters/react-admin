@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { formatDate, getParentNodes } from "../../utils/common.js"
+import {connect} from 'react-redux'
 import { Menu, Dropdown, Breadcrumb } from 'antd';
 import { withRouter } from "react-router-dom"
 import menuList from "../../config/menu"
 import LinkButton from "../../components/LinkButton/index.jsx"
 import "../../assets/css/layout/header.less"
+import {setTitle} from '../../redux/actions'
 class HeaderBar extends Component {
   state = {
     dateNow: ''
@@ -28,8 +30,7 @@ class HeaderBar extends Component {
 
   render() {
     const { dateNow } = this.state
-    const pathname = this.props.location.pathname
-    const nodes = getParentNodes(menuList, pathname, 'path')
+    // const pathname = this.props.location.pathname
     const menu = (
       <Menu>
         <Menu.Item>
@@ -53,7 +54,7 @@ class HeaderBar extends Component {
       <div className="header">
         <div className="header-left">
           <Breadcrumb>
-            {
+            {/* {
               nodes.map((item, index) => {
                 if(index === nodes.length - 1){
                   return (<Breadcrumb.Item key={index}><LinkButton>{item.text}</LinkButton></Breadcrumb.Item>)
@@ -61,7 +62,8 @@ class HeaderBar extends Component {
                   return (<Breadcrumb.Item key={index}>{item.text}</Breadcrumb.Item>) 
                 }
               })
-            }
+            } */}
+            <Breadcrumb.Item key={'keys'}>{this.props.currentTitle}</Breadcrumb.Item>
           </Breadcrumb>
         </div>
         <div className="header-right">
@@ -79,4 +81,9 @@ class HeaderBar extends Component {
     );
   }
 }
-export default withRouter(HeaderBar)
+
+export default connect(
+  state => ({currentTitle: state.currentTitle}),
+  {setTitle}
+)(withRouter(HeaderBar))
+

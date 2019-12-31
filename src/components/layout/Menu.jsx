@@ -1,8 +1,10 @@
 import React, {Component}  from 'react';
 import { Menu, Icon, } from 'antd';
+import {connect} from 'react-redux'
 import { Link, withRouter } from "react-router-dom"
 import "../../assets/css/layout/menu.less"
 import menuList from "../../config/menu"
+import {setTitle} from '../../redux/actions'
 
 const { SubMenu } = Menu;
 
@@ -33,7 +35,7 @@ class MenuBar extends Component {
         )
       }else{
         return (
-          <Menu.Item key={item.path}>
+          <Menu.Item key={item.path} onClick={()=>{this.props.setTitle(item.text)}}>
             <Link to={item.path}>
               <Icon type={item.icon} />
               <span>{item.text}</span>
@@ -41,7 +43,6 @@ class MenuBar extends Component {
           </Menu.Item>
         )
       }
-     
     })
   }
 
@@ -55,4 +56,7 @@ class MenuBar extends Component {
   }
 }
 
-export default withRouter(MenuBar)
+export default connect(
+  state => ({currentTitle: state.currentTitle}),
+  {setTitle}
+)(withRouter(MenuBar))

@@ -29,6 +29,12 @@ const menuList = [
         text: '角色管理',
         path: '/role'
       },
+      {
+        key: 24,
+        icon: 'container',
+        text: '状态管理',
+        path: '/redux'
+      }
     ]
   },
   {
